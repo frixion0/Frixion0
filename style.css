@@ -1,0 +1,60 @@
+/* Add these styles to handle the flag images in alerts */
+.battle-alert img {
+  width: 20px;
+  height: auto;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.battle-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.2;
+}
+
+/* Add styles for rank numbers */
+.rank-number {
+  display: inline-block;
+  min-width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  margin-right: 8px;
+  font-size: 0.9em;
+  color: #aaa;
+}
+
+/* Update category panel transition */
+.category-panel {
+  transition: all 0.3s ease;
+}
+
+/* Update country item to accommodate rank number */
+.country-item {
+  padding: 8px 12px;
+}
+
+.country-name {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Style for top 3 ranks */
+.rank-number:nth-child(1) {
+  background: linear-gradient(45deg, #ffd700, #ffa500);
+  color: #000;
+}
+
+.rank-number:nth-child(2) {
+  background: linear-gradient(45deg, #c0c0c0, #a0a0a0);
+  color: #000;
+}
+
+.rank-number:nth-child(3) {
+  background: linear-gradient(45deg, #cd7f32, #b87333);
+  color: #000;
+}
