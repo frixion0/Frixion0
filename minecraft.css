@@ -1,0 +1,750 @@
+@font-face {
+    font-family: 'Minecraft';
+    src: url('https://cdn.jsdelivr.net/gh/hansenmc/minecraft-font@main/MinecraftRegular-Bmg3.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Minecraft', sans-serif;
+    background-color: #546E7A;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" fill="#455A64"/><rect width="16" height="16" fill="#455A64"/><rect x="16" y="16" width="16" height="16" fill="#455A64"/><rect x="16" y="0" width="16" height="16" fill="#5546E7A"/><rect x="0" y="16" width="16" height="16" fill="#5546E7A"/></svg>');
+    background-repeat: repeat;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    image-rendering: pixelated;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+}
+
+.minecraft-window {
+    background-color: #C6C6C6;
+    border: 4px solid #000000;
+    border-radius: 0;
+    box-shadow: inset -4px -4px 0 0 #555, inset 4px 4px 0 0 #FFFFFF;
+    overflow: hidden;
+}
+
+.window-header {
+    background-color: #3366CC;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 4px solid #000000;
+    box-shadow: inset -2px 0 0 0 #555, inset 2px 2px 0 0 #FFF;
+    display: flex;
+    flex-direction: column;
+}
+
+.window-header h1 {
+    color: #FFFFFF;
+    font-size: 24px;
+    text-shadow: 2px 2px #000000;
+    margin-bottom: 10px;
+}
+
+.tab-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.tab-button {
+    font-family: 'Minecraft', sans-serif;
+    background-color: #7D7D7D;
+    border: 3px solid #000000;
+    box-shadow: inset -2px -2px 0 0 #555, inset 2px 2px 0 0 #FFF;
+    color: #FFFFFF;
+    text-shadow: 1px 1px #000000;
+    padding: 5px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.tab-button:hover {
+    background-color: #919191;
+}
+
+.tab-button.active {
+    background-color: #5D8C33;
+    box-shadow: inset 2px 2px 0 0 #555, inset -2px -2px 0 0 #7FB743;
+}
+
+.window-content {
+    padding: 20px;
+    background-color: #8B8B8B;
+    box-shadow: inset -2px -2px 0 0 #555, inset 2px 2px 0 0 #FFF;
+}
+
+.mob-display {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.mob-image-container {
+    width: 100%;
+    height: 300px;
+    background-color: #45462A;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect width="16" height="16" fill="#45462A"/><rect x="0" y="0" width="8" height="8" fill="#38391F"/><rect x="8" y="8" width="8" height="8" fill="#38391F"/></svg>');
+    border: 4px solid #000;
+    position: relative;
+    box-shadow: inset -2px -2px 0 0 #555, inset 2px 2px 0 0 #FFF;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mob-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    padding: 10px;
+    user-select: none;
+    position: relative;
+}
+
+.mob-info {
+    flex-grow: 1;
+    background-color: #C6C6C6;
+    border: 4px solid #000;
+    padding: 15px;
+    box-shadow: inset -2px -2px 0 0 #555, inset 2px 2px 0 0 #FFF;
+}
+
+.mob-info h2 {
+    color: #111;
+    font-size: 20px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+}
+
+.mob-stats {
+    margin-bottom: 15px;
+}
+
+.stat-row {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    width: 120px;
+    color: #000;
+    font-weight: bold;
+}
+
+.stat-value {
+    color: #333;
+}
+
+.mob-description {
+    color: #333;
+    line-height: 1.5;
+    border: 2px solid #000;
+    padding: 8px;
+    background-color: #E7E7E7;
+    min-height: 60px;
+    max-height: 85px;
+    overflow-y: auto;
+}
+
+.prompt-container {
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.prompt-row {
+    display: flex;
+    gap: 10px;
+}
+
+.prompt-input {
+    font-family: 'Minecraft', sans-serif;
+    background-color: #E7E7E7;
+    border: 3px solid #000000;
+    box-shadow: inset 2px 2px 0 0 #555, inset -2px -2px 0 0 #FFF;
+    color: #000000;
+    padding: 8px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.prompt-label {
+    font-family: 'Minecraft', sans-serif;
+    color: #000000;
+    font-size: 16px;
+    text-shadow: 1px 1px #ffffff;
+}
+
+/* Styling for image navigation */
+.image-nav {
+    font-family: 'Minecraft', sans-serif;
+    z-index: 10;
+    text-shadow: 1px 1px #000;
+}
+
+.generate-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.minecraft-button {
+    font-family: 'Minecraft', sans-serif;
+    background-color: #5D8C33;
+    border: 3px solid #000000;
+    box-shadow: inset -3px -3px 0 0 #3F5F22, inset 3px 3px 0 0 #7FB743;
+    color: #FFFFFF;
+    text-shadow: 2px 2px #000000;
+    padding: 8px 16px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.minecraft-button:hover {
+    background-color: #6DA03B;
+}
+
+.minecraft-button:active {
+    box-shadow: inset 3px 3px 0 0 #3F5F22, inset -3px -3px 0 0 #7FB743;
+    transform: translateY(2px);
+}
+
+.download-button {
+    font-family: 'Minecraft', sans-serif;
+    background-color: #5D8C33;
+    border: 3px solid #000000;
+    box-shadow: inset -3px -3px 0 0 #3F5F22, inset 3px 3px 0 0 #7FB743;
+    color: #FFFFFF;
+    text-shadow: 2px 2px #000000;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.1s;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.download-button:hover {
+    background-color: #6DA03B;
+}
+
+.download-button:active {
+    box-shadow: inset 3px 3px 0 0 #3F5F22, inset -3px -3px 0 0 #7FB743;
+    transform: translateY(2px);
+}
+
+.loading-text {
+    font-size: 18px;
+    color: #FFFFFF;
+    text-shadow: 1px 1px #000000;
+    padding: 10px;
+}
+
+.community-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+}
+
+.community-header h2 {
+    color: #111;
+    font-size: 22px;
+    text-shadow: 1px 1px #FFFFFF;
+}
+
+.sort-options {
+    display: flex;
+    gap: 10px;
+}
+
+.sort-button {
+    font-family: 'Minecraft', sans-serif;
+    background-color: #7D7D7D;
+    border: 2px solid #000000;
+    box-shadow: inset -2px -2px 0 0 #555, inset 2px 2px 0 0 #FFF;
+    color: #FFFFFF;
+    text-shadow: 1px 1px #000000;
+    padding: 4px 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.sort-button:hover {
+    background-color: #919191;
+}
+
+.sort-button.active {
+    background-color: #5D8C33;
+    box-shadow: inset 2px 2px 0 0 #555, inset -2px -2px 0 0 #7FB743;
+}
+
+.mob-posts-container {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.mob-post {
+    background-color: #C6C6C6;
+    border: 3px solid #000000;
+    margin-bottom: 20px;
+    box-shadow: inset -2px -2px 0 0 #555, inset 2px 2px 0 0 #FFF;
+}
+
+.post-header {
+    background-color: #3366CC;
+    color: white;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #000;
+}
+
+.post-author {
+    font-size: 16px;
+    text-shadow: 1px 1px #000;
+}
+
+.post-timestamp {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.post-content {
+    display: flex;
+    padding: 10px;
+    gap: 15px;
+}
+
+.post-img-container {
+    width: 120px;
+    height: 120px;
+    border: 3px solid #000;
+    overflow: hidden;
+    flex-shrink: 0;
+    background-color: #45462A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.post-info {
+    flex-grow: 1;
+}
+
+.post-title {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #111;
+    border-bottom: 2px solid #000;
+    padding-bottom: 3px;
+}
+
+.post-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    margin-bottom: 8px;
+}
+
+.post-stat {
+    background-color: #E7E7E7;
+    border: 2px solid #000;
+    padding: 3px 6px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.post-description {
+    font-size: 14px;
+    max-height: 80px;
+    overflow-y: auto;
+    background-color: #E7E7E7;
+    border: 2px solid #000;
+    padding: 5px;
+    color: #333;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background-color: #8B8B8B;
+    border-top: 3px solid #000;
+}
+
+.post-likes {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
+    text-shadow: 1px 1px #000;
+}
+
+.like-button {
+    font-family: 'Minecraft', sans-serif;
+    background-color: #7D7D7D;
+    border: 2px solid #000000;
+    box-shadow: inset -2px -2px 0 0 #555, inset 2px 2px 0 0 #FFF;
+    color: #FFFFFF;
+    text-shadow: 1px 1px #000000;
+    padding: 4px 8px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.like-button:hover {
+    background-color: #919191;
+}
+
+.like-button.liked {
+    background-color: #C43636;
+}
+
+.view-button {
+    font-family: 'Minecraft', sans-serif;
+    background-color: #5D8C33;
+    border: 2px solid #000000;
+    box-shadow: inset -2px -2px 0 0 #3F5F22, inset 2px 2px 0 0 #7FB743;
+    color: #FFFFFF;
+    text-shadow: 1px 1px #000000;
+    padding: 4px 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.view-button:hover {
+    background-color: #6DA03B;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    font-family: 'Minecraft', sans-serif;
+    background-color: #C6C6C6;
+    border: 4px solid #000000;
+    box-shadow: inset -4px -4px 0 0 #555, inset 4px 4px 0 0 #FFF;
+    margin: 15% auto;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #000;
+}
+
+.loading-message {
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+.mob-viewer-modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.mob-viewer-content {
+    font-family: 'Minecraft', sans-serif;
+    background-color: #C6C6C6;
+    border: 4px solid #000000;
+    box-shadow: inset -4px -4px 0 0 #555, inset 4px 4px 0 0 #FFF;
+    margin: 5% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.viewer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 3px solid #000;
+    padding-bottom: 10px;
+}
+
+.viewer-title {
+    font-size: 24px;
+    color: #111;
+}
+
+.viewer-close {
+    font-size: 24px;
+    cursor: pointer;
+    color: #000;
+}
+
+.viewer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.viewer-image-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    background-color: #45462A;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect width="16" height="16" fill="#45462A"/><rect x="0" y="0" width="8" height="8" fill="#38391F"/><rect x="8" y="8" width="8" height="8" fill="#38391F"/></svg>');
+    border: 3px solid #000;
+    position: relative;
+}
+
+.viewer-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.viewer-thumbnails {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+.viewer-thumbnail {
+    width: 80px;
+    height: 80px;
+    border: 3px solid #000;
+    cursor: pointer;
+    background-color: #45462A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.viewer-thumbnail img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.viewer-thumbnail.active {
+    border-color: #5D8C33;
+}
+
+.viewer-details {
+    background-color: #E7E7E7;
+    border: 3px solid #000;
+    padding: 15px;
+}
+
+.viewer-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.viewer-stat {
+    background-color: #C6C6C6;
+    border: 2px solid #000;
+    padding: 8px;
+    text-align: center;
+}
+
+.viewer-description {
+    background-color: #C6C6C6;
+    border: 2px solid #000;
+    padding: 10px;
+    min-height: 80px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.pixel-mob {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 240px;
+    height: 240px;
+}
+
+.pixel {
+    width: 100%;
+    height: 100%;
+}
+
+.spawn-egg-button {
+    font-family: 'Minecraft', sans-serif;
+    background-color: #BB6F00;
+    border: 3px solid #000000;
+    box-shadow: inset -3px -3px 0 0 #905400, inset 3px 3px 0 0 #E08700;
+    color: #FFFFFF;
+    text-shadow: 2px 2px #000000;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.spawn-egg-button:hover {
+    background-color: #D27F00;
+}
+
+.spawn-egg-button:active {
+    box-shadow: inset 3px 3px 0 0 #905400, inset -3px -3px 0 0 #E08700;
+    transform: translateY(2px);
+}
+
+.main-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background-color: #1D1F21;
+    background-image: url('bg.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.logo-container {
+    margin-bottom: 40px;
+    max-width: 90%;
+    animation: float 3s ease-in-out infinite;
+}
+
+.main-logo {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+}
+
+.start-button {
+    padding: 12px 30px !important;
+    font-size: 24px !important;
+    animation: pulse 2s infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.passive-indicator {
+    background-color: #5CB85C;
+    border: 2px solid #000;
+    border-radius: 3px;
+    color: white;
+    padding: 2px 5px;
+    margin-left: 5px;
+    font-size: 14px;
+    text-shadow: 1px 1px #000;
+    display: inline-block;
+}
+
+.hostile-indicator {
+    background-color: #D9534F;
+    border: 2px solid #000;
+    border-radius: 3px;
+    color: white;
+    padding: 2px 5px;
+    margin-left: 5px;
+    font-size: 14px;
+    text-shadow: 1px 1px #000;
+    display: inline-block;
+}
+
+.neutral-indicator {
+    background-color: #F0AD4E;
+    border: 2px solid #000;
+    border-radius: 3px;
+    color: white;
+    padding: 2px 5px;
+    margin-left: 5px;
+    font-size: 14px;
+    text-shadow: 1px 1px #000;
+    display: inline-block;
+}
